@@ -1,6 +1,5 @@
 import numpy as np
 from math import prod
-from sys import argv
 from argparse import ArgumentParser
 
 class OpCounter():
