@@ -75,10 +75,11 @@ def random_mul(m, k, _print=True):
 if __name__ == "__main__":
 
     parser = ArgumentParser()
-    parser.add_argument("-m", default=1, type=int)
-    parser.add_argument("-k", default=2, type=int)
-    parser.add_argument("-p", default=False, required=False, action="store_true")
+    parser.add_argument("-m", default=1, type=int, help="n = M * 2^(k); default = 1")
+    parser.add_argument("-k", default=2, type=int, help="n = m * 2^(K); default = 2")
+    parser.add_argument("-p", default=False, required=False, action="store_true", help="print irreducible operation counts at every step")
     args = parser.parse_args()
+
 
     random_mul(args.m, args.k, args.p)
 
