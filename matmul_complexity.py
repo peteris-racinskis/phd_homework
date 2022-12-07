@@ -2,6 +2,7 @@ import numpy as np
 from math import prod
 from argparse import ArgumentParser
 
+
 class OpCounter():
 
     def __init__(self, m=1, print=False):
@@ -33,7 +34,9 @@ class OpCounter():
             print(f"+ {prod(a.shape)} additions")
         return result
 
+
 def strassen_mul(a, b, c):
+
     h,w = a.shape
 
     a_11, b_11 = a[:h//2,:w//2], b[:h//2,:w//2]
@@ -62,14 +65,21 @@ def strassen_mul(a, b, c):
     return result
 
 def random_mul(m, k, _print=True):
+
     n = m * (2**k)
     a = np.random.rand(n,n)
     b = np.random.rand(n,n)
     cnt = OpCounter(m, _print)
     result = strassen_mul(a,b,cnt)
     assert(np.allclose(result, a @ b))
+    
+    strassen_total = cnt.incr_mul + cnt.incr_add
+    add_total = n**2 * (n-1)
+    mul_total = n**3
+
     print(f"n = {n} elements = {n**2} muls = {cnt.incr_mul} adds = {cnt.incr_add}")
-    print(f"Reference n^3 = {n**3} n^2(n-1) = {n**2 * (n-1)}")
+    print(f"Reference n^3 = {mul_total} n^2(n-1) = {add_total}")
+    print(f"Strassen advantage mul {mul_total - cnt.incr_mul} add {add_total - cnt.incr_add} total {add_total + mul_total - strassen_total}")
 
 
 if __name__ == "__main__":
